@@ -19,3 +19,29 @@
     cursor: pointer;
     display: flex;
 }
+
+.botonEliminar {
+    background-color: red;
+    color: white;
+    border: 2px solid rgb(255, 255, 255);
+    padding: 8px 12px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.botonEliminar:hover {
+    background-color: darkred;
+}
+
+.botonEditar {
+    background-color: yellow;
+    color: black;
+    border: 2px solid black;
+    padding: 8px 12px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.botonEditar:hover {
+    background-color: gold;
+}

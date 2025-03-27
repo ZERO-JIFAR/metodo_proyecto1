@@ -1,7 +1,7 @@
 .containerHeder{
     width: 100vw;
     height: 8vh;
-    background-color: #ccc;
+    background-color: #050024;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -9,4 +9,5 @@
 
 .containerTitleHeder{
     margin-left: 4vw;
+    color: white;
 }

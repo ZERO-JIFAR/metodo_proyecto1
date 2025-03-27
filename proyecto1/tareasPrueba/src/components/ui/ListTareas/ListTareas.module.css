@@ -11,7 +11,8 @@
     display: flex;
     justify-content: space-around;
     gap: 1rem;
-    width: 70%;
+    width: 25%;
+    margin-left: -0.4rem;
 }
 
 .containerList{
@@ -20,10 +21,24 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: #ccc;
+    background-color: rgb(96, 138, 245);
     width: 20%;
     min-height: 60vh;
     max-width: 62vh;
     overflow: auto;
     border-radius: 0.4rem;
+    overflow-x: hidden;
+}
+
+.botonAgregar {
+    background-color: greenyellow;
+    color: black;
+    border: 2px solid black;
+    padding: 8px;
+    border-radius: 65px;
+    cursor: pointer;
+}
+
+.botonAgregar:hover {
+    background-color: green;
 }

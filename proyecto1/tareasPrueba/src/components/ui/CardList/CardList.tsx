@@ -29,9 +29,9 @@ export const CardList: FC<ICardList> = ({tarea, handleOpenModalEdit}) => {
                 </p>
             </div>
             <div className={styles.actionCard}>
-                <button onClick={editarTarea}>🔍</button>
-                <button onClick={editarTarea}>🖍</button>
-                <button onClick={eliminarTareaById}>🗑</button>
+                <button onClick={editarTarea} className={styles.botonEditar}>🔍</button>
+                <button onClick={editarTarea} className={styles.botonEditar}>🖍</button>
+                <button onClick={eliminarTareaById} className={styles.botonEliminar}>🗑</button>
             </div>
         </div>
     );

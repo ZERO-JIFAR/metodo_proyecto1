@@ -30,9 +30,9 @@ export const ListTareas = () => {
         <>
             <div className={styles.containerPrincipalListTareas}>
                 <div className={styles.containerTitleAndButton}>
-                    <h2>Lista de Sprints</h2>
-                    <button onClick={() => {setOpenModalTarea(true)}}>
-                        Agregar tarea
+                    <h3><u>Lista de Sprints</u></h3>
+                    <button onClick={() => {setOpenModalTarea(true)}} className={styles.botonAgregar}>
+                        📝
                     </button>
                 </div>
                 <div className={styles.containerList}>
