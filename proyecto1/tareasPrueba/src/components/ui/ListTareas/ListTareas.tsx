@@ -48,6 +48,6 @@ export const ListTareas = () => {
                 </div>
             </div>
             {openModalTarea && <Modal handleCloseModal={handleCloseModal}/>}
-        </>//Made in Arnold
+        </>
     )
 }

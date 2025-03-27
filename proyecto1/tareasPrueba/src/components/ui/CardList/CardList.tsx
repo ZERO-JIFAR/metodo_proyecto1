@@ -22,16 +22,16 @@ export const CardList: FC<ICardList> = ({tarea, handleOpenModalEdit}) => {
             <div>
                 <h3>Titulo: {tarea.titulo}</h3>
                 <p>
-                    <b>Fecha Inicio: {tarea.fechaInicio}</b>
+                    <b>Inicio: {tarea.fechaInicio}</b>
                 </p>
                 <p>
-                    <b>Fecha Cierre: {tarea.fechaLimite}</b>
+                    <b>Cierre: {tarea.fechaLimite}</b>
                 </p>
             </div>
             <div className={styles.actionCard}>
-                <button onClick={editarTarea}>Ver</button>
-                <button onClick={editarTarea}>Editar</button>
-                <button onClick={eliminarTareaById}>Eliminar</button>
+                <button onClick={editarTarea}>🔍</button>
+                <button onClick={editarTarea}>🖍</button>
+                <button onClick={eliminarTareaById}>🗑</button>
             </div>
         </div>
     );

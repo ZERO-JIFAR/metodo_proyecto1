@@ -87,6 +87,6 @@ export const Modal:FC<IModal> = ({handleCloseModal}) => {
                     </div>
                 </form>
             </div>
-        </div>//Made in Arnold
+        </div>
     );
 };
