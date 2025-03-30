@@ -1,0 +1,49 @@
+.containerPrincipalListTareas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 1rem;
+    width: 100%;
+}
+
+.containerTitleAndButton {
+    display: flex;
+    align-items: center; /* Asegura alineación vertical */
+    gap: 0.5rem; /* Espacio entre título y botón */
+    width: 100%;
+}
+
+.containerList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: rgb(96, 138, 245);
+    width: 100%;
+    max-width: 250px;
+    min-height: 60vh;
+    overflow: auto;
+    border-radius: 0.4rem;
+    overflow-x: hidden;
+}
+
+.botonAgregar {
+    background-color: greenyellow;
+    color: black;
+    border: 2px solid black;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+}
+
+.botonAgregar:hover {
+    background-color: green;
+}
