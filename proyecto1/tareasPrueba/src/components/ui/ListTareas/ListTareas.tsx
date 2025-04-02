@@ -5,6 +5,7 @@ import { CardList } from "../CardList/CardList";
 import { Modal } from "../Modal/Modal";
 import { ITarea } from "../../../types/ITarea";
 import { useTareas } from "../../../hooks/useTareas";
+import { IoMdAddCircle } from "react-icons/io";
 
 export const ListTareas = () => {
     const setTareaActiva = tareaStore((state) => state.setTareaActiva);
@@ -29,18 +30,18 @@ export const ListTareas = () => {
     return (
         <>
             <div className={styles.containerPrincipalListTareas}>
-                <div className={styles.containerTitleAndButton}>
-                    <h3><u>Lista de Sprints</u></h3>
-                    <button
-                        onClick={() => {
-                            setOpenModalTarea(true);
-                        }}
-                        className={styles.botonAgregar}
-                    >
-                        📝
-                    </button>
-                </div>
                 <div className={styles.containerList}>
+                    <div className={styles.containerTitleAndButton}>
+                        <h3><u>Lista de Sprints</u></h3>
+                        <button
+                            onClick={() => {
+                                setOpenModalTarea(true);
+                            }}
+                            className={styles.botonAgregar}
+                        >
+                            <h1><IoMdAddCircle  /></h1>
+                        </button>
+                    </div>
                     {tareas.length > 0 ? (
                         tareas.map((el) => (
                             <CardList

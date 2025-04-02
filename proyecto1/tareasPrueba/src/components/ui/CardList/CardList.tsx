@@ -2,6 +2,7 @@ import { FC } from "react";
 import { ITarea } from "../../../types/ITarea"
 import styles from "./CardList.module.css"
 import { useTareas } from "../../../hooks/useTareas";
+import { BsFillEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 
 type ICardList = {
     tarea: ITarea;
@@ -29,9 +30,15 @@ export const CardList: FC<ICardList> = ({tarea, handleOpenModalEdit}) => {
                 </p>
             </div>
             <div className={styles.actionCard}>
-                <button onClick={editarTarea} className={styles.botonEditar}>🔍</button>
-                <button onClick={editarTarea} className={styles.botonEditar}>🖍</button>
-                <button onClick={eliminarTareaById} className={styles.botonEliminar}>🗑</button>
+                <button onClick={editarTarea} className={styles.botonEditar}>
+                    <BsFillEyeFill />
+                </button>
+                <button onClick={editarTarea} className={styles.botonEditar}>
+                    <BsPencilFill />
+                </button>
+                <button onClick={eliminarTareaById} className={styles.botonEliminar}>
+                    <BsFillTrashFill />
+                </button>
             </div>
         </div>
     );
