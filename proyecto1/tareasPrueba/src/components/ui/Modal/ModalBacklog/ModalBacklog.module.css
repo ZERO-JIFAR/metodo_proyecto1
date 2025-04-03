@@ -1,0 +1,63 @@
+.modalBacklog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalContentBacklog {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modalTitleBacklog {
+    margin-bottom: 1rem;
+  }
+  
+  .modalLabelBacklog {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .modalInputBacklog,
+  .modalTextareaBacklog {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .modalButtonBacklog {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .modalButtonBacklog:hover {
+    background-color: #388E3C;
+  }
+  
+  .modalCancelButtonBacklog {
+    background-color: #F44336;
+  }
+  
+  .modalCancelButtonBacklog:hover {
+    background-color: #D32F2F;
+  }
+  
