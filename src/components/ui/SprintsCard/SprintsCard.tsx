@@ -9,7 +9,7 @@ type ICardList = {
     handleOpenModalEdit:(tarea: ITarea)=> void 
 };
 
-export const CardList: FC<ICardList> = ({tarea, handleOpenModalEdit}) => {
+export const SprintsCard: FC<ICardList> = ({tarea, handleOpenModalEdit}) => {
     const {eliminarTarea} = useTareas(); 
     const {toggleView} = useScreenStore();
 

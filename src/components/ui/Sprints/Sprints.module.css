@@ -1,0 +1,38 @@
+.sprintsGeneralContainer{
+    width: 200%;
+    height: 80vh;
+    background-color: #4c6ef5;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    color: white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+.sprintsColumnsContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.sprintsColumnsContainer.h1{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.sprintsColumnsContainer.p{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+.sprintsColumnContainer{
+    flex: 1;
+    background: #6c7ae0; /* Azul medio */
+    padding: 10px;
+    border-radius: 10px;
+    min-height: 200px;
+}
