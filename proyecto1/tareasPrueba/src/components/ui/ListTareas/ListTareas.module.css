@@ -26,6 +26,8 @@
     overflow: auto;
     border-radius: 0.4rem;
     overflow-x: hidden;
+    
+    max-height: 700px;
 }
 
 .botonAgregar {
