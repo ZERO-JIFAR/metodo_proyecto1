@@ -1,0 +1,35 @@
+{
+  "tareas": [
+    {
+      "id": "123",
+      "titulo": "lalala",
+      "descripcion": "desc1",
+      "fechaLimite": "2025-03-27",
+      "fechaInicio": "2025-03-25"
+    },
+    {
+      "id": "1234",
+      "titulo": "titu2",
+      "descripcion": "desc2",
+      "fechaLimite": "2222"
+    },
+    {
+      "id": "12345",
+      "titulo": "titu3",
+      "descripcion": "desc3",
+      "fechaLimite": "2025-03-27"
+    },
+    {
+      "id": "Wed Mar 26 2025",
+      "titulo": "lala",
+      "fechaInicio": "2025-03-19",
+      "fechaLimite": "2025-03-27"
+    },
+    {
+      "id": "Tue Apr 01 2025",
+      "titulo": "lalala2.0",
+      "fechaInicio": "2025-04-02",
+      "fechaLimite": "2025-04-18"
+    }
+  ]
+}
