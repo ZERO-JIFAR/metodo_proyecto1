@@ -11,28 +11,24 @@
     align-items: center;
     justify-content: flex-start;
     position: relative;
+    gap: 2rem;
 }
 .sprintsColumnsContainer{
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-.sprintsColumnsContainer.h1{
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
-}
-.sprintsColumnsContainer.p{
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    background-color: #00ff0d;
 }
 .sprintsColumnContainer{
     flex: 1;
-    background: #6c7ae0; /* Azul medio */
-    padding: 10px;
+    background-color: #ff0000;
+    margin: 10px;
     border-radius: 10px;
-    min-height: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #4a90e2;
+    font-size: 18px;
+    font-weight: bold;
 }
