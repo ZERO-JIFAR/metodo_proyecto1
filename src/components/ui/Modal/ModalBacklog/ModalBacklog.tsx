@@ -4,50 +4,75 @@ import styles from './ModalBacklog.module.css';
 interface ModalBacklogProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddTask: (title: string, description: string) => void;
+  onAddTask: (titulo: string, descripcion: string) => void;
 }
 
 const ModalBacklog: React.FC<ModalBacklogProps> = ({ isOpen, onClose, onAddTask }) => {
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
+  const [titulo, setTitulo] = useState('');
+  const [descripcion, setDescripcion] = useState('');
 
-  const handleAddTask = () => {
-    if (taskTitle && taskDescription) {
-      onAddTask(taskTitle, taskDescription);
-      setTaskTitle('');
-      setTaskDescription('');
+  const handleAddTask = async () => {
+    if (titulo && descripcion) {
+      const nuevaTarea = {
+        id: Date.now().toString(),
+        titulo,
+        descripcion
+      };
+
+      try {
+        const response = await fetch('http://localhost:3001/backlog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(nuevaTarea)
+        });
+
+        if (response.ok) {
+          onAddTask(titulo, descripcion);
+          setTitulo('');
+          setDescripcion('');
+          onClose();
+        } else {
+          alert('Error al guardar la tarea en la base de datos.');
+        }
+      } catch (error) {
+        alert('Error de conexión con el servidor.');
+        console.error(error);
+      }
     } else {
-      alert('Por favor, ingresa un título y una descripción para la tarea.');
+      alert('Por favor, completa el título y la descripción.');
     }
   };
 
-  if (!isOpen) return null; // Si el modal no está abierto, no renderiza nada.
+  if (!isOpen) return null;
 
   return (
     <div className={styles.modalBacklog}>
       <div className={styles.modalContentBacklog}>
-        <h2 className={styles.modalTitleBacklog}>Crear Nueva Tarea</h2>
-        <label className={styles.modalLabelBacklog}>
-          Título:
-          <input 
-            className={styles.modalInputBacklog}
-            type="text" 
-            value={taskTitle} 
-            onChange={(e) => setTaskTitle(e.target.value)} 
-            placeholder="Ingresa el título de la tarea" 
-          />
-        </label>
-        <label className={styles.modalLabelBacklog}>
-          Descripción:
-          <textarea 
-            className={styles.modalTextareaBacklog}
-            value={taskDescription} 
-            onChange={(e) => setTaskDescription(e.target.value)} 
-            placeholder="Ingresa la descripción de la tarea" 
-          />
-        </label>
-        <button className={styles.modalButtonBacklog} onClick={handleAddTask}>Agregar Tarea</button>
-        <button className={styles.modalCancelButtonBacklog} onClick={onClose}>Cancelar</button>
+        <h2 className={styles.modalTitleBacklog}>Crear Tarea de Backlog</h2>
+
+        <input
+          className={styles.modalInputBacklog}
+          type="text"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
+          placeholder="Título"
+        />
+
+        <textarea
+          className={styles.modalTextareaBacklog}
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          placeholder="Descripción"
+        />
+
+        <div className={styles.modalButtonGroup}>
+          <button className={styles.modalCancelButtonBacklog} onClick={onClose}>
+            Cancelar
+          </button>
+          <button className={styles.modalButtonBacklog} onClick={handleAddTask}>
+            Crear Tarea
+          </button>
+        </div>
       </div>
     </div>
   );
