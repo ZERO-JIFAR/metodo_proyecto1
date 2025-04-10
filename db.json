@@ -2,38 +2,32 @@
   "tareas": [
     {
       "id": "123",
-      "titulo": "lalala",
-      "descripcion": "desc1",
-      "fechaLimite": "2025-03-27",
+      "titulo": "Construir mi casa.",
+      "descripcion": "Me quiero ir a vivir a Miami",
+      "fechaLimite": "2026-09-30",
       "fechaInicio": "2025-03-25",
       "tipo": "activa"
     },
     {
-      "id": "1744207334693",
-      "titulo": "sdffsd",
-      "descripcion": "sdfsdf",
-      "fechaLimite": "",
+      "id": "1744304059443",
+      "titulo": "Poner la mesa",
+      "fechaInicio": "2025-04-10",
+      "fechaLimite": "2025-04-10",
+      "descripcion": "Estamos invitados a tomar el té.",
+      "tipo": "activa"
+    },
+    {
+      "id": "1744305468495",
+      "titulo": "Contratar obreros.",
+      "descripcion": "Mano de obra amish.\n",
       "fechaInicio": "",
+      "fechaLimite": "",
       "tipo": "backlog"
     },
     {
-      "id": "1744207342610",
-      "titulo": "esdfs",
-      "descripcion": "sdgsgf",
-      "fechaLimite": "",
-      "fechaInicio": "",
-      "tipo": "backlog"
-    },
-    {
-      "id": "Thu Apr 10 2025",
-      "titulo": "pRUEBA",
-      "fechaInicio": "2500-05-23",
-      "fechaLimite": "2005-02-06"
-    },
-    {
-      "id": "01bf",
-      "titulo": "sd",
-      "descripcion": "ds",
+      "id": "1744305487126",
+      "titulo": "Poner la tetera de porcelana.",
+      "descripcion": "Que no se ve.\n",
       "fechaInicio": "",
       "fechaLimite": "",
       "tipo": "backlog"

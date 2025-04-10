@@ -1,80 +1,89 @@
-import { useShallow } from "zustand/shallow"
-import { tareaStore } from "../store/tareaStore"
-import { ITarea } from "../types/ITarea"
-import { editarTarea, eliminarTareaPorID, getAllTareas, postNuevaTarea } from "../http/tareas"
-import Swal from "sweetalert2"
+import { useShallow } from "zustand/shallow";
+import { useTareasStore } from "../store/tareaStore";
+import { ITarea } from "../types/ITarea";
+import {
+  editarTarea,
+  eliminarTareaPorID,
+  getAllTareas,
+  postNuevaTarea
+} from "../http/tareas";
+import Swal from "sweetalert2";
 
 export const useTareas = () => {
-    const {tareas, setArrayTareas, agregarNuevaTarea, eliminarUnaTarea, editarUnaTarea}= tareaStore(
-        useShallow((state)=>({
-            tareas: state.tareas,
-            setArrayTareas: state.setArrayTareas,
-            agregarNuevaTarea: state.agregarNuevaTarea,
-            eliminarUnaTarea: state.eliminarUnaTarea,
-            editarUnaTarea: state.editarUnaTarea,
-        }))
-    )
+  const {
+    tareas,
+    cargarTareas,
+    agregarTarea,
+    eliminarTarea,
+    actualizarTarea,
+  } = useTareasStore(
+    useShallow((state) => ({
+      tareas: state.tareas,
+      cargarTareas: state.cargarTareas,
+      agregarTarea: state.agregarTarea,
+      eliminarTarea: state.eliminarTarea,
+      actualizarTarea: state.actualizarTarea,
+    }))
+  );
 
-    const getTareas = async () => {
-        const data = await getAllTareas();
-        if (data) setArrayTareas(data);
+  const getTareas = async () => {
+    await cargarTareas();
+  };
+
+  const crearTarea = async (nuevaTarea: ITarea) => {
+    try {
+      await postNuevaTarea(nuevaTarea);
+      await cargarTareas();
+      Swal.fire("Éxito", "Tarea creada correctamente", "success");
+    } catch (error) {
+      console.error("Error al crear la tarea", error);
+      Swal.fire("Error", "Hubo un problema al crear la tarea", "error");
     }
+  };
 
-    const crearTarea = async (nuevaTarea:ITarea)=> {
-        agregarNuevaTarea(nuevaTarea);
-        try{
-            await postNuevaTarea(nuevaTarea);
-            Swal.fire("Exito","Tarea creada correctamente","success")
-        }catch(error){
-            eliminarUnaTarea(nuevaTarea.id!);
-            console.log("tarea salio mal");
-        }
-    };
-
-    const putTareaEditar = async (tareaEditada: ITarea) => {
-
-        const estadoPrevio = tareas.find((el)=>el.id === tareaEditada.id)
-
-        editarUnaTarea(tareaEditada)
-
-        try {
-            await editarTarea(tareaEditada)
-            Swal.fire("Exito","Tarea actualizada correctamente","success")
-        } catch (error) {
-            if (estadoPrevio) editarUnaTarea(estadoPrevio);
-            console.log("editar tarea salio mal");
-        }
+  const putTareaEditar = async (tareaEditada: ITarea) => {
+    const estadoPrevio = tareas.find((t) => t.id === tareaEditada.id);
+    try {
+      await editarTarea(tareaEditada);
+      await cargarTareas();
+      Swal.fire("Éxito", "Tarea actualizada correctamente", "success");
+    } catch (error) {
+      console.error("Error al editar la tarea", error);
+      Swal.fire("Error", "No se pudo editar la tarea", "error");
+      if (estadoPrevio) await actualizarTarea(estadoPrevio); // rollback
     }
+  };
 
-    const eliminarTarea = async (idTarea: string) => {
-        const estadoPrevio = tareas.find((el)=> el.id === idTarea);
+  const eliminarTareaConConfirmacion = async (idTarea: string) => {
+    const estadoPrevio = tareas.find((t) => t.id === idTarea);
 
-        const confirm = await Swal.fire({
-            title: "Estas seguro?",
-            text: "Esta accion no se puede deshacer",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Si, eliminar",
-            cancelButtonText: "Cancelar",
-        })
+    const confirm = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
 
-        if(!confirm.isConfirmed) return;
+    if (!confirm.isConfirmed) return;
 
-        eliminarUnaTarea(idTarea)
-        try {
-            await eliminarTareaPorID(idTarea);
-            Swal.fire("Eliminado","Tarea eliminada correctamente","success")
-        } catch (error) {
-            if (estadoPrevio) agregarNuevaTarea (estadoPrevio);
-            console.log("eliminar tarea salio mal")
-        }
+    try {
+      await eliminarTareaPorID(idTarea);
+      await cargarTareas();
+      Swal.fire("Eliminado", "Tarea eliminada correctamente", "success");
+    } catch (error) {
+      console.error("Error al eliminar la tarea", error);
+      Swal.fire("Error", "No se pudo eliminar la tarea", "error");
+      if (estadoPrevio) await agregarTarea(estadoPrevio); // rollback
     }
+  };
 
-    return {
-        getTareas,
-        crearTarea,
-        putTareaEditar,
-        eliminarTarea,
-        tareas,
-    }
-}
+  return {
+    getTareas,
+    crearTarea,
+    putTareaEditar,
+    eliminarTarea: eliminarTareaConConfirmacion,
+    tareas,
+  };
+};

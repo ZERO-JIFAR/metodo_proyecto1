@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { tareaStore } from "../../../store/tareaStore";
+import { useTareasStore } from "../../../store/tareaStore";
 import styles from "./ListTareas.module.css";
 import { CardList } from "../CardList/CardList";
 import { Modal } from "../Modal/Modal";
@@ -8,15 +8,16 @@ import { useTareas } from "../../../hooks/useTareas";
 import { IoMdAddCircle } from "react-icons/io";
 
 export const ListTareas = () => {
-    const setTareaActiva = tareaStore((state) => state.setTareaActiva);
-
+    const setTareaActiva = useTareasStore((state) => state.setTareaActiva);
     const { getTareas, tareas } = useTareas();
+
+    const [openModalTarea, setOpenModalTarea] = useState(false);
 
     useEffect(() => {
         getTareas();
     }, []);
 
-    const [openModalTarea, setOpenModalTarea] = useState(false);
+    const tareasActivas = tareas.filter((t: ITarea) => t.tipo === "activa"); // ✅ solo sprint
 
     const handleOpenModalEdit = (tarea: ITarea) => {
         setTareaActiva(tarea);
@@ -34,16 +35,14 @@ export const ListTareas = () => {
                     <div className={styles.containerTitleAndButton}>
                         <h3><u>Lista de Sprints</u></h3>
                         <button
-                            onClick={() => {
-                                setOpenModalTarea(true);
-                            }}
+                            onClick={() => setOpenModalTarea(true)}
                             className={styles.botonAgregar}
                         >
-                            <h1><IoMdAddCircle  /></h1>
+                            <h1><IoMdAddCircle /></h1>
                         </button>
                     </div>
-                    {tareas.length > 0 ? (
-                        tareas.map((el) => (
+                    {tareasActivas.length > 0 ? (
+                        tareasActivas.map((el: ITarea) => (
                             <CardList
                                 key={el.id}
                                 handleOpenModalEdit={handleOpenModalEdit}
