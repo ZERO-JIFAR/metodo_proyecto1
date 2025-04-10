@@ -5,19 +5,38 @@
       "titulo": "lalala",
       "descripcion": "desc1",
       "fechaLimite": "2025-03-27",
-      "fechaInicio": "2025-03-25"
-    }
-  ],
-  "backlog": [
+      "fechaInicio": "2025-03-25",
+      "tipo": "activa"
+    },
     {
       "id": "1744207334693",
       "titulo": "sdffsd",
-      "descripcion": "sdfsdf"
+      "descripcion": "sdfsdf",
+      "fechaLimite": "",
+      "fechaInicio": "",
+      "tipo": "backlog"
     },
     {
       "id": "1744207342610",
       "titulo": "esdfs",
-      "descripcion": "sdgsgf"
+      "descripcion": "sdgsgf",
+      "fechaLimite": "",
+      "fechaInicio": "",
+      "tipo": "backlog"
+    },
+    {
+      "id": "Thu Apr 10 2025",
+      "titulo": "pRUEBA",
+      "fechaInicio": "2500-05-23",
+      "fechaLimite": "2005-02-06"
+    },
+    {
+      "id": "01bf",
+      "titulo": "sd",
+      "descripcion": "ds",
+      "fechaInicio": "",
+      "fechaLimite": "",
+      "tipo": "backlog"
     }
   ]
 }
