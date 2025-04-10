@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from "react";
-import styles from "./ModalBacklog.module.css";
-import { ITarea } from "../../../../types/ITarea";
+import React, { useEffect, useState } from 'react';
+import styles from './ModalBacklog.module.css';
+import { useTareasStore } from "../../../../store/tareaStore";
 
-interface ModalBacklogProps {
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddTask: (titulo: string, descripcion: string) => void;
-  onUpdateTask: (titulo: string, descripcion: string) => void;
-  isEditing: boolean;
-  editingTask: ITarea | null;
 }
 
-const ModalBacklog: React.FC<ModalBacklogProps> = ({
-  isOpen,
-  onClose,
-  onAddTask,
-  onUpdateTask,
-  isEditing,
-  editingTask,
-}) => {
-  const [titulo, setTitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
+const ModalBacklog: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const { agregarTarea, actualizarTarea, tareaActiva, setTareaActiva } = useTareasStore();
+  const [titulo, setTitulo] = useState('');
+  const [descripcion, setDescripcion] = useState('');
 
   useEffect(() => {
-    if (isEditing && editingTask) {
-      setTitulo(editingTask.titulo);
-      setDescripcion(editingTask.descripcion);
+    if (tareaActiva && tareaActiva.tipo === "backlog") {
+      setTitulo(tareaActiva.titulo);
+      setDescripcion(tareaActiva.descripcion);
     } else {
-      setTitulo("");
-      setDescripcion("");
+      setTitulo('');
+      setDescripcion('');
     }
-  }, [isEditing, editingTask]);
+  }, [tareaActiva]);
 
-  const handleSubmit = () => {
-    if (titulo && descripcion) {
-      if (isEditing) {
-        onUpdateTask(titulo, descripcion);
-      } else {
-        onAddTask(titulo, descripcion);
-      }
-    } else {
-      alert("Por favor, completa el título y la descripción.");
+  const handleSubmit = async () => {
+    if (!titulo || !descripcion) {
+      alert("Completa todos los campos");
+      return;
     }
+
+    if (tareaActiva && tareaActiva.tipo === "backlog") {
+      await actualizarTarea({ ...tareaActiva, titulo, descripcion });
+    } else {
+      await agregarTarea({
+        id: new Date().getTime().toString(),
+        titulo,
+        descripcion,
+        fechaInicio: "",
+        fechaLimite: "",
+        tipo: "backlog",
+      });
+    }
+
+    setTareaActiva(null);
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -50,27 +51,25 @@ const ModalBacklog: React.FC<ModalBacklogProps> = ({
     <div className={styles.modalBacklog}>
       <div className={styles.modalContentBacklog}>
         <h2 className={styles.modalTitleBacklog}>
-          {isEditing ? "Editar Tarea de Backlog" : "Crear Tarea de Backlog"}
+          {tareaActiva && tareaActiva.tipo === "backlog" ? "Editar Tarea" : "Crear Tarea de Backlog"}
         </h2>
         <input
           className={styles.modalInputBacklog}
           type="text"
+          placeholder="Título"
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
-          placeholder="Título"
         />
         <textarea
           className={styles.modalTextareaBacklog}
+          placeholder="Descripción"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          placeholder="Descripción"
         />
         <div className={styles.modalButtonGroup}>
-          <button className={styles.modalCancelButtonBacklog} onClick={onClose}>
-            Cancelar
-          </button>
-          <button className={styles.modalButtonBacklog} onClick={handleSubmit}>
-            {isEditing ? "Guardar Cambios" : "Crear Tarea"}
+          <button onClick={onClose} className={styles.modalCancelButtonBacklog}>Cancelar</button>
+          <button onClick={handleSubmit} className={styles.modalButtonBacklog}>
+            {tareaActiva && tareaActiva.tipo === "backlog" ? "Guardar Cambios" : "Crear Tarea"}
           </button>
         </div>
       </div>
