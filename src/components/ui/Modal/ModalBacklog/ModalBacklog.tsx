@@ -11,33 +11,11 @@ const ModalBacklog: React.FC<ModalBacklogProps> = ({ isOpen, onClose, onAddTask 
   const [titulo, setTitulo] = useState('');
   const [descripcion, setDescripcion] = useState('');
 
-  const handleAddTask = async () => {
+  const handleAddTask = () => {
     if (titulo && descripcion) {
-      const nuevaTarea = {
-        id: Date.now().toString(),
-        titulo,
-        descripcion
-      };
-
-      try {
-        const response = await fetch('http://localhost:3001/backlog', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(nuevaTarea)
-        });
-
-        if (response.ok) {
-          onAddTask(titulo, descripcion);
-          setTitulo('');
-          setDescripcion('');
-          onClose();
-        } else {
-          alert('Error al guardar la tarea en la base de datos.');
-        }
-      } catch (error) {
-        alert('Error de conexión con el servidor.');
-        console.error(error);
-      }
+      onAddTask(titulo, descripcion);
+      setTitulo('');
+      setDescripcion('');
     } else {
       alert('Por favor, completa el título y la descripción.');
     }
