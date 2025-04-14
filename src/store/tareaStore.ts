@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import { ITarea } from "../types/ITarea";
+import { EstadoTarea, ITarea } from "../types/ITarea";
 
 interface ITareaStore{
     tareas: ITarea[];
     tareaActiva: ITarea | null;
+    moverEstadoTarea: (id: string, nuevoEstado: EstadoTarea) => void
     setTareaActiva: (tareaActiva: ITarea | null)=>void;
     setArrayTareas: (arrayDeTareas: ITarea[])=>void;
     agregarNuevaTarea: (nuevaTareas: ITarea)=>void;
@@ -37,4 +38,9 @@ export const tareaStore = create<ITareaStore>((set)=>({
         }),
 
     setTareaActiva: (tareaActivaIn)=> set(()=>({tareaActiva: tareaActivaIn})),
+
+    moverEstadoTarea: (id, nuevoEstado) =>
+        set((state) => ({
+            tareas: state.tareas.map((t) => (t.id === id ? { ...t, estado: nuevoEstado } : t)),
+        })),
 }));

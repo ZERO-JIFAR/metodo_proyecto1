@@ -1,5 +1,5 @@
 .sprintsGeneralContainer{
-    width: 200%;
+    width: 350%;
     height: 80vh;
     background-color: #4c6ef5;
     padding: 1.5rem;
@@ -11,24 +11,43 @@
     align-items: center;
     justify-content: flex-start;
     position: relative;
-    gap: 2rem;
+}
+.sprintsGeneralContainer h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    font-style: italic;
+    text-align: center;
+}
+.sprintsGeneralContainer p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+    text-align: center;
 }
 .sprintsColumnsContainer{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    background-color: #00ff0d;
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-evenly;
 }
 .sprintsColumnContainer{
-    flex: 1;
-    background-color: #ff0000;
-    margin: 10px;
-    border-radius: 10px;
-    padding: 20px;
+    background-color: rgb(96, 138, 245);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 300px;
+    min-height: 600px;
+    box-shadow: 4px 4px 10px rgba(54, 54, 54, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: #4a90e2;
-    font-size: 18px;
-    font-weight: bold;
+    gap: 0.5rem;
+}
+.sprintsColumnContainer p {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
 }
