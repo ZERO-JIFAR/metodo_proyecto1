@@ -3,6 +3,7 @@ import { ITarea } from "../../../types/ITarea";
 import styles from "./CardList.module.css";
 import { useTareas } from "../../../hooks/useTareas";
 import { BsFillEyeFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
+import { useScreenStore } from "../../../store/screenStateStore";
 
 type ICardList = {
   tarea: ITarea;
@@ -11,6 +12,7 @@ type ICardList = {
 
 export const CardList: FC<ICardList> = ({ tarea, handleOpenModalEdit }) => {
   const { eliminarTarea } = useTareas();
+  const {toggleView} = useScreenStore();
 
   const eliminarTareaById = () => {
     eliminarTarea(tarea.id!);
@@ -32,7 +34,7 @@ export const CardList: FC<ICardList> = ({ tarea, handleOpenModalEdit }) => {
         </p>
       </div>
       <div className={styles.actionCard}>
-        <button onClick={editarTarea} className={styles.botonEditar}>
+        <button onClick={toggleView} className={styles.botonEditar}>
           <BsFillEyeFill />
         </button>
         <button onClick={editarTarea} className={styles.botonEditar}>

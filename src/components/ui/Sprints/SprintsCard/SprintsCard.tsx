@@ -1,4 +1,4 @@
-import { tareaStore } from "../../../../store/tareaStore"
+import { useTareasStore } from "../../../../store/tareaStore"
 import { EstadoTarea, ITarea } from "../../../../types/ITarea"
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const SprintsCard = ({ tarea }: Props) => {
-    const moverTarea = tareaStore((state) => state.moverEstadoTarea)
+    const moverTarea = useTareasStore((state) => state.moverEstadoTarea)
 
     const avanzar = () => {
         const siguiente: Record<EstadoTarea, EstadoTarea | null> = {

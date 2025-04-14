@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ITarea } from '../types/ITarea';
+import { EstadoTarea, ITarea } from '../types/ITarea';
 import {
   getAllTareas,
   postNuevaTarea,

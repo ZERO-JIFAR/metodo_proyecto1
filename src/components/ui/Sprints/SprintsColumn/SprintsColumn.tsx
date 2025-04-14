@@ -1,4 +1,4 @@
-import { tareaStore } from "../../../../store/tareaStore"
+import { useTareasStore } from "../../../../store/tareaStore"
 import { SprintsCard } from "../SprintsCard/SprintsCard"
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const SprintColumn = ({ estado, titulo }: Props) => {    
-    const tareas = tareaStore((state) => state.tareas)
+    const tareas = useTareasStore((state) => state.tareas)
 
     return (
         <div className="columnContainer">
