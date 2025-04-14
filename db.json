@@ -2,28 +2,35 @@
   "tareas": [
     {
       "id": "123",
-      "titulo": "lalala",
-      "descripcion": "desc1",
-      "fechaLimite": "2025-03-27",
-      "fechaInicio": "2025-03-25"
+      "titulo": "Construir mi casa.",
+      "descripcion": "Me quiero ir a vivir a Miami",
+      "fechaLimite": "2026-09-30",
+      "fechaInicio": "2025-03-25",
+      "tipo": "activa"
     },
     {
-      "id": "1234",
-      "titulo": "titu2",
-      "descripcion": "desc2",
-      "fechaLimite": "2222"
+      "id": "1744304059443",
+      "titulo": "Poner la mesa",
+      "fechaInicio": "2025-04-10",
+      "fechaLimite": "2025-04-10",
+      "descripcion": "Estamos invitados a tomar el té.",
+      "tipo": "activa"
     },
     {
-      "id": "12345",
-      "titulo": "titu3",
-      "descripcion": "desc3",
-      "fechaLimite": "2025-03-27"
+      "id": "1744305468495",
+      "titulo": "Contratar obreros.",
+      "descripcion": "Mano de obra amish.\n",
+      "fechaInicio": "",
+      "fechaLimite": "",
+      "tipo": "backlog"
     },
     {
-      "id": "Wed Mar 26 2025",
-      "titulo": "lala",
-      "fechaInicio": "2025-03-19",
-      "fechaLimite": "2025-03-27"
+      "id": "1744305487126",
+      "titulo": "Poner la tetera de porcelana.",
+      "descripcion": "Que no se ve.\n",
+      "fechaInicio": "",
+      "fechaLimite": "",
+      "tipo": "backlog"
     }
   ]
 }

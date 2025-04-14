@@ -7,7 +7,6 @@ import { Sprints } from "../ui/Sprints/Sprints";
 
 export const TareasScreen = () => {
     const { activeView } = useScreenStore();
-
     return (
         <div className="tareas-screen-container">
             <Header />

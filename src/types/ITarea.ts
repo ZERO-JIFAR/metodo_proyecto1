@@ -1,9 +1,9 @@
-export interface ITarea{
-    id: string
-    titulo: string
-    estado: EstadoTarea
-    fechaInicio: string
-    fechaLimite: string
+export interface ITarea {
+  id: string;
+  titulo: string;
+  descripcion: string;
+  fechaInicio: string;
+  fechaLimite: string;
+  tipo: 'activa' | 'backlog';
 }
-
 export type EstadoTarea = "pendiente" | "en-progreso" | "completado"

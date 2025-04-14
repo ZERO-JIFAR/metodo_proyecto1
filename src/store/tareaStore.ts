@@ -1,45 +1,65 @@
-import { create } from "zustand";
-import { EstadoTarea, ITarea } from "../types/ITarea";
+import { create } from 'zustand';
+import { ITarea } from '../types/ITarea';
+import {
+  getAllTareas,
+  postNuevaTarea,
+  editarTarea,
+  eliminarTareaPorID
+} from '../http/tareas';
 
-interface ITareaStore{
-    tareas: ITarea[];
-    tareaActiva: ITarea | null;
-    moverEstadoTarea: (id: string, nuevoEstado: EstadoTarea) => void
-    setTareaActiva: (tareaActiva: ITarea | null)=>void;
-    setArrayTareas: (arrayDeTareas: ITarea[])=>void;
-    agregarNuevaTarea: (nuevaTareas: ITarea)=>void;
-    editarUnaTarea: (tareaActualizada: ITarea)=>void;
-    eliminarUnaTarea: (idTarea: string)=>void;
-
+interface TareasState {
+  tareas: ITarea[];
+  tareaActiva: ITarea | null;
+  moverEstadoTarea: (id: string, nuevoEstado: EstadoTarea) => void
+  cargarTareas: () => Promise<void>;
+  agregarTarea: (tarea: ITarea) => Promise<void>;
+  actualizarTarea: (tarea: ITarea) => Promise<void>;
+  eliminarTarea: (id: string) => Promise<void>;
+  setTareaActiva: (tarea: ITarea | null) => void;
 }
 
-export const tareaStore = create<ITareaStore>((set)=>({
-    tareas: [],
-    tareaActiva: null,
+export const useTareasStore = create<TareasState>((set) => ({
+  tareas: [],
+  tareaActiva: null,
 
-    setArrayTareas: (arrayDeTareas)=> set(()=>({tareas: arrayDeTareas})),
+  cargarTareas: async () => {
+    const data = await getAllTareas();
+    set({ tareas: data ?? [] });
+  },
 
-    agregarNuevaTarea: (nuevaTarea)=> set((state)=> ({tareas:[...state.tareas, nuevaTarea]})),
+  agregarTarea: async (tarea: ITarea) => {
+    try {
+      await postNuevaTarea(tarea);
+      const data = await getAllTareas();
+      set({ tareas: data ?? [] });
+    } catch (error) {
+      console.error("Error al agregar tarea:", error);
+    }
+  },
 
-    editarUnaTarea: (tareaEditada)=> 
-        set((state)=>{
-            const arregloTareas = state.tareas.map((tarea)=> 
-                tarea.id === tareaEditada.id ? {... tarea, ... tareaEditada}: tarea
-            );
-            return {tareas: arregloTareas};
-        }),
+  actualizarTarea: async (tarea: ITarea) => {
+    try {
+      await editarTarea(tarea);
+      const data = await getAllTareas();
+      set({ tareas: data ?? [] });
+    } catch (error) {
+      console.error("Error al actualizar tarea:", error);
+    }
+  },
 
-    eliminarUnaTarea: (idTarea)=> 
-        set((state)=>{
-            const arregloTareas = state.tareas.filter(
-                (tarea)=> tarea.id !== idTarea
-            );
-            return {tareas: arregloTareas};
-        }),
+  eliminarTarea: async (id: string) => {
+    try {
+      await eliminarTareaPorID(id);
+      const data = await getAllTareas();
+      set({ tareas: data ?? [] });
+    } catch (error) {
+      console.error("Error al eliminar tarea:", error);
+    }
+  },
 
-    setTareaActiva: (tareaActivaIn)=> set(()=>({tareaActiva: tareaActivaIn})),
-
-    moverEstadoTarea: (id, nuevoEstado) =>
+  setTareaActiva: (tarea: ITarea | null) => set({ tareaActiva: tarea }),
+  
+  moverEstadoTarea: (id, nuevoEstado) =>
         set((state) => ({
             tareas: state.tareas.map((t) => (t.id === id ? { ...t, estado: nuevoEstado } : t)),
         })),

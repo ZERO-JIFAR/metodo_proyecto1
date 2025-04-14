@@ -1,21 +1,64 @@
-// Backlog.tsx
-import React, { useState } from 'react';
-import styles from './Backlog.module.css';
-import Modal from '../Modal/ModalBacklog/ModalBacklog';
+import React, { useEffect, useState } from "react";
+import styles from "./Backlog.module.css";
+import ModalBacklog from "../../ui/Modal/ModalBacklog/ModalBacklog";
+import { ITarea } from "../../../types/ITarea";
+import { useTareasStore } from "../../../store/tareaStore"; 
 
-const Backlog = () => {
+
+const Backlog: React.FC = () => {
+  const {
+    tareas,
+    cargarTareas,
+    agregarTarea,
+    actualizarTarea,
+    eliminarTarea,
+    setTareaActiva,
+    tareaActiva,
+  } = useTareasStore();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const tareasBacklog = tareas.filter((t) => t.tipo === "backlog");
+
+  useEffect(() => {
+    cargarTareas();
+  }, [cargarTareas]);
+
+  const openModal = () => {
+    setTareaActiva(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (tarea: ITarea) => {
+    setTareaActiva(tarea);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    await eliminarTarea(id);
+  };
 
   return (
     <div className={styles.backlogContainer}>
-      <h1 className={styles.backlogTitle}>Backlog</h1>
-      <div className={styles.taskList}>
-        <h2 className={styles.taskListTitle}>Tareas en el Backlog</h2>
-        <button className={styles.addTaskButton} onClick={() => setIsModalOpen(true)}>
+      <div className={styles.headerContainer}>
+        <h1 className={styles.backlogTitle}>Backlog</h1>
+        <button className={styles.addTaskButton} onClick={openModal}>
           ➕
         </button>
       </div>
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+      <div className={styles.taskList}>
+        {tareasBacklog.map((task) => (
+          <div key={task.id} className={styles.taskItem}>
+            <strong className={styles.taskTitle}>Título:</strong> {task.titulo}
+            <strong className={styles.taskDescription}>Descripción:</strong> {task.descripcion}
+            <div className={styles.taskButtons}>
+              <button onClick={() => handleEdit(task)} className={styles.editButton}>✏️</button>
+              <button onClick={() => handleDelete(task.id!)} className={styles.deleteButton}>🗑️</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <ModalBacklog isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
