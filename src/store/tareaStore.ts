@@ -10,6 +10,7 @@ import {
 interface TareasState {
   tareas: ITarea[];
   tareaActiva: ITarea | null;
+  moverEstadoTarea: (id: string, nuevoEstado: EstadoTarea) => void
   cargarTareas: () => Promise<void>;
   agregarTarea: (tarea: ITarea) => Promise<void>;
   actualizarTarea: (tarea: ITarea) => Promise<void>;
@@ -57,4 +58,9 @@ export const useTareasStore = create<TareasState>((set) => ({
   },
 
   setTareaActiva: (tarea: ITarea | null) => set({ tareaActiva: tarea }),
+  
+  moverEstadoTarea: (id, nuevoEstado) =>
+        set((state) => ({
+            tareas: state.tareas.map((t) => (t.id === id ? { ...t, estado: nuevoEstado } : t)),
+        })),
 }));
