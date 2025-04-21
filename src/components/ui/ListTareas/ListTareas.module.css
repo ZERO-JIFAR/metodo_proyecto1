@@ -22,7 +22,7 @@
     background-color: #4a90e2;
     width: 100%;
     max-width: 320px;
-    min-height: 82vh;
+    min-height: 90vh;
     border-radius: 0.4rem;
     overflow: hidden; /* Cambio aquí para evitar el scroll */
     max-height: 700px;
