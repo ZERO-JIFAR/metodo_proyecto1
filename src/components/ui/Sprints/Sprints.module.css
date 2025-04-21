@@ -1,7 +1,7 @@
 .sprintsGeneralContainer{
     width: 350%;
-    height: 80vh;
-    background-color: #4c6ef5;
+    height: 88vh;
+    background-color: #4a90e2;
     padding: 1.5rem;
     border-radius: 1rem;
     color: white;
@@ -34,7 +34,7 @@
     justify-content: space-evenly;
 }
 .sprintsColumnContainer{
-    background-color: rgb(96, 138, 245);
+    background-color: white;
     border-radius: 1.5rem;
     padding: 1rem;
     width: 100%;
@@ -47,7 +47,7 @@
     gap: 0.5rem;
 }
 .sprintsColumnContainer p {
-    color: white;
+    color: black;
     font-size: 1.4rem;
     font-weight: 700;
 }
