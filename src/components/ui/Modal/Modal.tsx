@@ -80,7 +80,6 @@ export const Modal: FC<IModal> = ({ handleCloseModal }) => {
     <div className={styles.containerPrincipalModal}>
       <div className={styles.contentPopUp}>
         <h3>{tareaActiva ? "Editar tarea" : "Crear tarea"}</h3>
-        //ERROR POR LO MISMO DE ARRIBA, ANDA IGUAL
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContent}>
           <input
             placeholder="Ingrese un título"
