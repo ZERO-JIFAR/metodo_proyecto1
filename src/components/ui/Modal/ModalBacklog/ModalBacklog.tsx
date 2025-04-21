@@ -47,6 +47,7 @@ const ModalBacklog: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     if (tareaActiva && tareaActiva.tipo === "backlog") {
       await actualizarTarea({ ...tareaActiva, ...data });
     } else {
+      //ACA TIRA ERROR PORQUE FALTA ESTADO EN ITAREA, PERO ANDA IGUALMENTE, TRANCA
       await agregarTarea({
         id: new Date().getTime().toString(),
         titulo: data.titulo,
@@ -64,7 +65,7 @@ const ModalBacklog: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   const handleClose = () => {
     setTareaActiva(null);
-    reset(); // limpia errores y valores
+    reset();
     onClose();
   };
 

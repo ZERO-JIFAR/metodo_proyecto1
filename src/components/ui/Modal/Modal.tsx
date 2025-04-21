@@ -1,55 +1,78 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useTareasStore } from "../../../store/tareaStore";
 import styles from "./Modal.module.css";
 import { ITarea } from "../../../types/ITarea";
 import { useTareas } from "../../../hooks/useTareas";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 type IModal = {
   handleCloseModal: VoidFunction;
 };
 
-const initialState: ITarea = {
-  titulo: "",
-  fechaInicio: "",
-  fechaLimite: "",
-  descripcion: "",
-  tipo: "activa",
-};
+const schema = yup.object({
+  titulo: yup.string().required("El título es obligatorio").min(3, "Mínimo 3 caracteres"),
+  fechaInicio: yup.string().required("La fecha de inicio es obligatoria"),
+  fechaLimite: yup.string().required("La fecha límite es obligatoria"),
+  descripcion: yup.string().max(500, "Máximo 500 caracteres"),
+});
 
 export const Modal: FC<IModal> = ({ handleCloseModal }) => {
   const tareaActiva = useTareasStore((state) => state.tareaActiva);
   const setTareaActiva = useTareasStore((state) => state.setTareaActiva);
 
   const { crearTarea, putTareaEditar } = useTareas();
-  const [formValues, setFormValues] = useState<ITarea>(initialState);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors }
+  } = useForm<ITarea>({
+
+    //ERROR PORQUE está esperando que los valores del formulario coincidan exactamente con la interfaz ITarea
+    resolver: yupResolver(schema),
+    defaultValues: {
+      titulo: "",
+      fechaInicio: "",
+      fechaLimite: "",
+      descripcion: "",
+      tipo: "activa",
+    },
+  });
 
   useEffect(() => {
     if (tareaActiva && tareaActiva.tipo === "activa") {
-      setFormValues(tareaActiva);
+      setValue("titulo", tareaActiva.titulo);
+      setValue("fechaInicio", tareaActiva.fechaInicio);
+      setValue("fechaLimite", tareaActiva.fechaLimite);
+      setValue("descripcion", tareaActiva.descripcion);
     } else {
-      setFormValues(initialState);
+      reset();
     }
-  }, [tareaActiva]);
+  }, [tareaActiva, setValue, reset]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = (data: ITarea) => {
     if (tareaActiva && tareaActiva.tipo === "activa") {
-      putTareaEditar(formValues);
+      putTareaEditar({ ...tareaActiva, ...data });
     } else {
       crearTarea({
-        ...formValues,
+        ...data,
         id: new Date().getTime().toString(),
         tipo: "activa",
       });
     }
 
     setTareaActiva(null);
+    reset();
+    handleCloseModal();
+  };
+
+  const handleCancel = () => {
+    setTareaActiva(null);
+    reset(); // limpia campos y errores
     handleCloseModal();
   };
 
@@ -57,41 +80,39 @@ export const Modal: FC<IModal> = ({ handleCloseModal }) => {
     <div className={styles.containerPrincipalModal}>
       <div className={styles.contentPopUp}>
         <h3>{tareaActiva ? "Editar tarea" : "Crear tarea"}</h3>
-        <form onSubmit={handleSubmit} className={styles.formContent}>
+        //ERROR POR LO MISMO DE ARRIBA, ANDA IGUAL
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formContent}>
           <input
             placeholder="Ingrese un título"
             type="text"
-            required
-            onChange={handleChange}
-            value={formValues.titulo}
+            {...register("titulo")}
             autoComplete="off"
-            name="titulo"
           />
+          {errors.titulo && <p className={styles.modalError}>{errors.titulo.message}</p>}
+
           <input
             type="date"
-            value={formValues.fechaInicio}
-            required
-            onChange={handleChange}
+            {...register("fechaInicio")}
             autoComplete="off"
-            name="fechaInicio"
           />
+          {errors.fechaInicio && <p className={styles.modalError}>{errors.fechaInicio.message}</p>}
+
           <input
             type="date"
-            value={formValues.fechaLimite}
-            required
-            onChange={handleChange}
+            {...register("fechaLimite")}
             autoComplete="off"
-            name="fechaLimite"
           />
+          {errors.fechaLimite && <p className={styles.modalError}>{errors.fechaLimite.message}</p>}
+
           <textarea
             placeholder="Descripción (opcional)"
-            onChange={handleChange}
-            value={formValues.descripcion}
+            {...register("descripcion")}
             autoComplete="off"
-            name="descripcion"
           />
+          {errors.descripcion && <p className={styles.modalError}>{errors.descripcion.message}</p>}
+
           <div className={styles.buttonCard}>
-            <button type="button" onClick={handleCloseModal}>Cancelar</button>
+            <button type="button" onClick={handleCancel}>Cancelar</button>
             <button type="submit">
               {tareaActiva ? "Editar tarea" : "Crear tarea"}
             </button>

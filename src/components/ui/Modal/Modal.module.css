@@ -63,3 +63,10 @@
     background-color: #5cb85c;
     color: white;
 }
+
+.modalError {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: -8px;
+    margin-bottom: 10px;
+  }
