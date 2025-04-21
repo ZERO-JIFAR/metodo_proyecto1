@@ -21,16 +21,15 @@
     padding: 1rem;
     background-color: #4a90e2;
     width: 100%;
-    max-width: 250px;
-    min-height: 60vh;
-    overflow: auto;
+    max-width: 320px;
+    min-height: 82vh;
     border-radius: 0.4rem;
-    overflow-x: hidden;
+    overflow: hidden; /* Cambio aquí para evitar el scroll */
     max-height: 700px;
 }
 
 .botonAgregar {
-    background-color: #6de24a;;
+    background-color: #6de24a;
     border: none; 
     border-radius: 100%;
     cursor: pointer;
@@ -43,5 +42,5 @@
 }
 
 .botonAgregar:hover {
-    background-color: #2a7912;;
+    background-color: #2a7912;
 }
