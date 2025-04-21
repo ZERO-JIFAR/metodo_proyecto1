@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Backlog.module.css";
 import ModalBacklog from "../../ui/Modal/ModalBacklog/ModalBacklog";
 import { ITarea } from "../../../types/ITarea";
-import { useTareasStore } from "../../../store/tareaStore"; 
+import { useTareasStore } from "../../../store/tareaStore";
 
 const Backlog: React.FC = () => {
   const {
@@ -53,8 +53,18 @@ const Backlog: React.FC = () => {
                 <strong className={styles.taskDescription}>Descripción:</strong> {task.descripcion}
               </div>
               <div className={styles.taskButtons}>
-                <button onClick={() => handleEdit(task)} className={styles.editButton}>✏️</button>
-                <button onClick={() => handleDelete(task.id!)} className={styles.deleteButton}>🗑️</button>
+                <button onClick={() => handleEdit(task)} className={styles.editButton}>
+                  ✏️
+                </button>
+                <button onClick={() => handleDelete(task.id!)} className={styles.deleteButton}>
+                  🗑️
+                </button>
+                <button
+                  
+                  className={styles.moveButton}
+                >
+                  ➡️ Mover a Sprints
+                </button>
               </div>
             </div>
           </div>
