@@ -4,7 +4,6 @@ import ModalBacklog from "../../ui/Modal/ModalBacklog/ModalBacklog";
 import { ITarea } from "../../../types/ITarea";
 import { useTareasStore } from "../../../store/tareaStore"; 
 
-
 const Backlog: React.FC = () => {
   const {
     tareas,
@@ -48,11 +47,15 @@ const Backlog: React.FC = () => {
       <div className={styles.taskList}>
         {tareasBacklog.map((task) => (
           <div key={task.id} className={styles.taskItem}>
-            <strong className={styles.taskTitle}>Título:</strong> {task.titulo}
-            <strong className={styles.taskDescription}>Descripción:</strong> {task.descripcion}
-            <div className={styles.taskButtons}>
-              <button onClick={() => handleEdit(task)} className={styles.editButton}>✏️</button>
-              <button onClick={() => handleDelete(task.id!)} className={styles.deleteButton}>🗑️</button>
+            <div className={styles.taskContent}>
+              <div className={styles.taskDetails}>
+                <strong className={styles.taskTitle}>Título:</strong> {task.titulo}
+                <strong className={styles.taskDescription}>Descripción:</strong> {task.descripcion}
+              </div>
+              <div className={styles.taskButtons}>
+                <button onClick={() => handleEdit(task)} className={styles.editButton}>✏️</button>
+                <button onClick={() => handleDelete(task.id!)} className={styles.deleteButton}>🗑️</button>
+              </div>
             </div>
           </div>
         ))}
