@@ -1,119 +1,105 @@
 import { FC, useEffect } from "react";
 import { useTareasStore } from "../../../store/tareaStore";
 import styles from "./Modal.module.css";
-import { ITarea } from "../../../types/ITarea";
-import { useTareas } from "../../../hooks/useTareas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { ISprint } from "../../../types/ITarea";
 
 type IModal = {
   handleCloseModal: VoidFunction;
 };
 
+interface SprintFormData {
+  nombre: string;
+  fechaInicio: string;
+  fechaCierre: string;
+}
+
 const schema = yup.object({
-  titulo: yup.string().required("El título es obligatorio").min(3, "Mínimo 3 caracteres"),
+  nombre: yup.string().required("El nombre del sprint es obligatorio").min(3, "Mínimo 3 caracteres"),
   fechaInicio: yup.string().required("La fecha de inicio es obligatoria"),
-  fechaLimite: yup.string().required("La fecha límite es obligatoria"),
-  descripcion: yup.string().max(500, "Máximo 500 caracteres"),
+  fechaCierre: yup.string().required("La fecha de cierre es obligatoria"),
 });
 
 export const Modal: FC<IModal> = ({ handleCloseModal }) => {
-  const tareaActiva = useTareasStore((state) => state.tareaActiva);
+  const sprintActivo = useTareasStore((state) => state.tareaActiva);
   const setTareaActiva = useTareasStore((state) => state.setTareaActiva);
-
-  const { crearTarea, putTareaEditar } = useTareas();
+  const { crearSprint, actualizarSprint, cargarDatos } = useTareasStore();
 
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-    formState: { errors }
-  } = useForm<ITarea>({
-
-    //ERROR PORQUE está esperando que los valores del formulario coincidan exactamente con la interfaz ITarea
+    formState: { errors },
+  } = useForm<SprintFormData>({
     resolver: yupResolver(schema),
     defaultValues: {
-      titulo: "",
+      nombre: "",
       fechaInicio: "",
-      fechaLimite: "",
-      descripcion: "",
-      tipo: "activa",
+      fechaCierre: "",
     },
   });
 
+  const isSprint = (tarea: any): tarea is ISprint => tarea?.tipo === "sprint";
+
   useEffect(() => {
-    if (tareaActiva && tareaActiva.tipo === "activa") {
-      setValue("titulo", tareaActiva.titulo);
-      setValue("fechaInicio", tareaActiva.fechaInicio);
-      setValue("fechaLimite", tareaActiva.fechaLimite);
-      setValue("descripcion", tareaActiva.descripcion);
+    if (isSprint(sprintActivo)) {
+      setValue("nombre", sprintActivo.nombre);
+      setValue("fechaInicio", sprintActivo.fechaInicio);
+      setValue("fechaCierre", sprintActivo.fechaCierre);
     } else {
       reset();
     }
-  }, [tareaActiva, setValue, reset]);
+  }, [sprintActivo, setValue, reset]);
 
-  const onSubmit = (data: ITarea) => {
-    if (tareaActiva && tareaActiva.tipo === "activa") {
-      putTareaEditar({ ...tareaActiva, ...data });
-    } else {
-      crearTarea({
-        ...data,
-        id: new Date().getTime().toString(),
-        tipo: "activa",
-      });
+  const onSubmit = async (data: SprintFormData) => {
+    try {
+      if (isSprint(sprintActivo)) {
+        await actualizarSprint({ ...sprintActivo, ...data });
+      } else {
+        await crearSprint({
+          ...data,
+          id: new Date().getTime().toString(),
+          tipo: "sprint",
+          tareas: [],
+        });
+      }
+
+      await cargarDatos();
+      setTareaActiva(null);
+      reset();
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error al guardar sprint:", error);
     }
-
-    setTareaActiva(null);
-    reset();
-    handleCloseModal();
   };
 
   const handleCancel = () => {
     setTareaActiva(null);
-    reset(); // limpia campos y errores
+    reset();
     handleCloseModal();
   };
 
   return (
     <div className={styles.containerPrincipalModal}>
       <div className={styles.contentPopUp}>
-        <h3>{tareaActiva ? "Editar tarea" : "Crear tarea"}</h3>
+        <h3>{isSprint(sprintActivo) ? "Editar Sprint" : "Crear Sprint"}</h3>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContent}>
-          <input
-            placeholder="Ingrese un título"
-            type="text"
-            {...register("titulo")}
-            autoComplete="off"
-          />
-          {errors.titulo && <p className={styles.modalError}>{errors.titulo.message}</p>}
+          <input placeholder="Nombre del Sprint" type="text" {...register("nombre")} autoComplete="off" />
+          {errors.nombre && <p className={styles.modalError}>{errors.nombre.message}</p>}
 
-          <input
-            type="date"
-            {...register("fechaInicio")}
-            autoComplete="off"
-          />
+          <input type="date" {...register("fechaInicio")} autoComplete="off" />
           {errors.fechaInicio && <p className={styles.modalError}>{errors.fechaInicio.message}</p>}
 
-          <input
-            type="date"
-            {...register("fechaLimite")}
-            autoComplete="off"
-          />
-          {errors.fechaLimite && <p className={styles.modalError}>{errors.fechaLimite.message}</p>}
-
-          <textarea
-            placeholder="Descripción (opcional)"
-            {...register("descripcion")}
-            autoComplete="off"
-          />
-          {errors.descripcion && <p className={styles.modalError}>{errors.descripcion.message}</p>}
+          <input type="date" {...register("fechaCierre")} autoComplete="off" />
+          {errors.fechaCierre && <p className={styles.modalError}>{errors.fechaCierre.message}</p>}
 
           <div className={styles.buttonCard}>
             <button type="button" onClick={handleCancel}>Cancelar</button>
             <button type="submit">
-              {tareaActiva ? "Editar tarea" : "Crear tarea"}
+              {isSprint(sprintActivo) ? "Editar Sprint" : "Crear Sprint"}
             </button>
           </div>
         </form>

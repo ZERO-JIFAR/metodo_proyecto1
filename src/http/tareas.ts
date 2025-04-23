@@ -1,43 +1,48 @@
 import axios from "axios";
 import { ITarea } from "../types/ITarea";
 
-const API_URL = "http://localhost:3000/tareas";
+const API_URL = "http://localhost:3000"; // Asegúrate de que este sea el endpoint correcto
 
-export const getAllTareas = async () => {
+// Obtener el backlog
+export const getBacklog = async () => {
   try {
-    const response = await axios.get<ITarea[]>(API_URL);
+    const response = await axios.get(`${API_URL}/backlog`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error al obtener el backlog:", (error as any).message);
+    throw error; // Lanza el error para manejarlo en el lugar donde se llama
   }
 };
 
-export const postNuevaTarea = async (nuevaTarea: ITarea) => {
+// Obtener la lista de sprints
+export const getSprintList = async () => {
   try {
-    const response = await axios.post<ITarea>(API_URL, { ...nuevaTarea });
+    const response = await axios.get(`${API_URL}/sprintList`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error al obtener la lista de sprints:", (error as any).message);
+    throw error; // Lanza el error para manejarlo en el lugar donde se llama
   }
 };
 
-export const editarTarea = async (tareaActualizada: ITarea) => {
+// Actualizar el backlog
+export const updateBacklog = async (backlog: { tareas: ITarea[] }) => {
   try {
-    const response = await axios.put<ITarea>(
-      `${API_URL}/${tareaActualizada.id}`,
-      { ...tareaActualizada }
-    );
+    const response = await axios.put(`${API_URL}/backlog`, backlog);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error al actualizar el backlog:", (error as any).message);
+    throw error; // Lanza el error para manejarlo en el lugar donde se llama
   }
 };
 
-export const eliminarTareaPorID = async (idTarea: string) => {
+// Actualizar la lista de sprints
+export const updateSprintList = async (sprintList: { sprints: any[] }) => {
   try {
-    const response = await axios.delete<ITarea>(`${API_URL}/${idTarea}`);
+    const response = await axios.put(`${API_URL}/sprintList`, sprintList);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error al actualizar la lista de sprints:", (error as any).message);
+    throw error; // Lanza el error para manejarlo en el lugar donde se llama
   }
 };

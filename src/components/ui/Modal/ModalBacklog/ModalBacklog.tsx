@@ -22,7 +22,7 @@ const schema = yup.object({
 });
 
 const ModalBacklog: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const { agregarTarea, actualizarTarea, tareaActiva, setTareaActiva } = useTareasStore();
+  const { agregarTareaBacklog, actualizarTarea, tareaActiva, setTareaActiva } = useTareasStore();
 
   const {
     register,
@@ -47,11 +47,11 @@ const ModalBacklog: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     if (tareaActiva && tareaActiva.tipo === "backlog") {
       await actualizarTarea({ ...tareaActiva, ...data });
     } else {
-      //ACA TIRA ERROR PORQUE FALTA ESTADO EN ITAREA, PERO ANDA IGUALMENTE, TRANCA
-      await agregarTarea({
+      await agregarTareaBacklog({
         id: new Date().getTime().toString(),
         titulo: data.titulo,
         descripcion: data.descripcion,
+        estado: "pendiente", // Estado predeterminado
         fechaInicio: "",
         fechaLimite: "",
         tipo: "backlog",

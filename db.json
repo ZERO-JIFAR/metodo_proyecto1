@@ -1,36 +1,64 @@
 {
-  "tareas": [
-    {
-      "id": "123",
-      "titulo": "Construir mi casa.",
-      "descripcion": "Me quiero ir a vivir a Miami",
-      "fechaLimite": "2026-09-30",
-      "fechaInicio": "2025-03-25",
-      "tipo": "activa"
-    },
-    {
-      "id": "1744304059443",
-      "titulo": "Poner la mesa",
-      "fechaInicio": "2025-04-10",
-      "fechaLimite": "2025-04-10",
-      "descripcion": "Estamos invitados a tomar el té.",
-      "tipo": "activa"
-    },
-    {
-      "id": "1744642296054",
-      "titulo": "TareaPrueba",
-      "descripcion": "Hola",
-      "fechaInicio": "",
-      "fechaLimite": "",
-      "tipo": "backlog"
-    },
-    {
-      "id": "1745251155544",
-      "titulo": "pruieba",
-      "descripcion": "asd",
-      "fechaInicio": "",
-      "fechaLimite": "",
-      "tipo": "backlog"
-    }
-  ]
+  "backlog": {
+    "tareas": [
+      {
+        "id": "1745371178864",
+        "titulo": "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "descripcion": "asdfadsf",
+        "estado": "en-progreso",
+        "fechaInicio": "",
+        "fechaLimite": "",
+        "tipo": "backlog"
+      },
+      {
+        "id": "1745371347794",
+        "titulo": "adsasdasda",
+        "descripcion": "asdasdasd",
+        "estado": "pendiente",
+        "fechaInicio": "",
+        "fechaLimite": "",
+        "tipo": "backlog"
+      },
+      {
+        "id": "1745371708235",
+        "titulo": "sad",
+        "descripcion": "",
+        "estado": "pendiente",
+        "fechaInicio": "6879-09-05",
+        "fechaLimite": "9789-07-08",
+        "tipo": "activa"
+      },
+      {
+        "id": "1745378826226",
+        "titulo": "asdasd",
+        "descripcion": "asdasd",
+        "estado": "pendiente",
+        "fechaInicio": "",
+        "fechaLimite": "",
+        "tipo": "backlog"
+      }
+    ]
+  },
+  "sprintList": {
+    "sprints": [
+      {
+        "id": "b0e3f34b-68c6-49eb-b059-ab251ed81629",
+        "fechaInicio": "2025-03-04",
+        "fechaCierre": "2025-03-11",
+        "nombre": "Sprint 128",
+        "tareas": [
+          {
+            "id": "50699dec-3d1a-45ff-a94d-82d416eac053",
+            "titulo": "Tarea 2",
+            "descripcion": "Estamos aca",
+            "estado": "pendiente",
+            "fechaInicio": "",
+            "fechaLimite": "2025-03-06",
+            "tipo": "sprint"
+          }
+        ],
+        "tipo": "sprint"
+      }
+    ]
+  }
 }

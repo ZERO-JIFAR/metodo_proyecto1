@@ -12,29 +12,33 @@ type ICardList = {
 
 export const CardList: FC<ICardList> = ({ tarea, handleOpenModalEdit }) => {
   const { eliminarTarea } = useTareas();
-  const {toggleView} = useScreenStore();
+  const { toggleView } = useScreenStore();
 
-  const eliminarTareaById = () => {
-    eliminarTarea(tarea.id!);
+  const eliminarTareaById = async () => {
+    try {
+      await eliminarTarea(tarea.id!); // Elimina la tarea por ID
+    } catch (error) {
+      console.error("Error al eliminar la tarea:", error);
+    }
   };
 
   const editarTarea = () => {
-    handleOpenModalEdit(tarea);
+    handleOpenModalEdit(tarea); // Abre el modal para editar la tarea
   };
 
   return (
     <div className={styles.containerCard}>
       <div>
-        <h3>Titulo: {tarea.titulo}</h3>
+        <h3>Título: {tarea.titulo}</h3>
         <p>
-          <b>Inicio: {tarea.fechaInicio}</b>
+          <b>Inicio:</b> {tarea.fechaInicio || "No especificado"}
         </p>
         <p>
-          <b>Cierre: {tarea.fechaLimite}</b>
+          <b>Cierre:</b> {tarea.fechaLimite || "No especificado"}
         </p>
       </div>
       <div className={styles.actionCard}>
-        <button onClick={toggleView} className={styles.botonEditar}>
+        <button onClick={toggleView} className={styles.botonVer}>
           <BsFillEyeFill />
         </button>
         <button onClick={editarTarea} className={styles.botonEditar}>
