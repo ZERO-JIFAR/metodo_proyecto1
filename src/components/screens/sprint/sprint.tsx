@@ -86,15 +86,6 @@ const SprintScreen = () => {
             </button>
           )}
         </div>
-
-        <div className={styles.btnAcciones}>
-          <button onClick={() => handleEditTarea(tarea)} className={styles.editButton}>
-            Editar
-          </button>
-          <button onClick={() => handleDeleteTarea(tarea.id)} className={styles.deleteButton}>
-            Eliminar
-          </button>
-        </div>
       </div>
     ));
   };
@@ -151,12 +142,6 @@ const SprintScreen = () => {
             setModalTareaVisible(true);
           }}>
             + Crear nueva tarea
-          </button>
-          <button className={styles.editButton} onClick={() => setModalSprintVisible(true)}>
-            {sprintData.id ? "Editar Sprint" : "Crear Sprint"}
-          </button>
-          <button className={styles.deleteButton} onClick={() => deleteSprintController(sprintData.id)}>
-            Eliminar Sprint
           </button>
         </div>
       </div>
