@@ -107,3 +107,9 @@
     transform: scale(1);
   }
 }
+
+.modalError {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
