@@ -86,6 +86,14 @@ const SprintScreen = () => {
             </button>
           )}
         </div>
+
+        {/* Botón para eliminar tarea */}
+        <button
+          className={styles.deleteButton}
+          onClick={() => handleDeleteTarea(tarea.id)}
+        >
+          Eliminar
+        </button>
       </div>
     ));
   };
