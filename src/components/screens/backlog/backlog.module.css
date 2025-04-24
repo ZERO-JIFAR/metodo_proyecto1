@@ -21,7 +21,7 @@
   background-color: #4a90e2; 
   padding: 1rem;
   border-radius: 0.5rem;
-  min-width: 120%; 
+  height: 100%;
 }
 
 .headerBacklog {

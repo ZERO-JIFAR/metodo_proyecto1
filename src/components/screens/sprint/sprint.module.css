@@ -1,9 +1,13 @@
 .container {
     padding: 1rem;
-    background-color: #4a90e2; 
-    min-height: 50vh;
-    min-width: 150vh;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    min-height: calc(100vh - 2rem);
+    background-color: #4a90e2;
     color: white;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .header {

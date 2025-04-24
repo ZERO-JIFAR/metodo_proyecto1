@@ -7,12 +7,14 @@ import "./index.css";
 function App() {
   return (
     <Router>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", height: "100vh", width: "100%" }}>
         <SprintsAside />
-        <Routes>
-          <Route path="/" element={<BacklogScreen />} />
-          <Route path="/sprint/:id" element={<SprintScreen />} />
-        </Routes>
+        <div style={{ flex: 1, height: "100%", backgroundColor: "#e6f7ff", overflowY: "auto" }}>
+          <Routes>
+            <Route path="/" element={<BacklogScreen />} />
+            <Route path="/sprint/:id" element={<SprintScreen />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
