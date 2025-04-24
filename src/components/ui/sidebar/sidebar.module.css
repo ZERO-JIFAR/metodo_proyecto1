@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .containerAsideWrapper {
+    display: flex;
+    justify-content: flex-start;
+    width: 20%;
+    min-width: 250px;
+  }
+  
+  .sprintCardContainer{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: scroll;
+  }
+  
+  .fullHeightBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fcfeff;
+    flex-grow: 1;
+    gap: 0.7rem;
+    height: 92vh;
+    box-sizing: border-box;
+  }
+  
+  
+  .buttonBacklog {
+    all: unset;
+    background-color: #4a90e2;
+    color: #000;
+    border: 2px solid #4a90e2;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    font-weight: bold;
+    margin-top: 0.8rem;
+  }
+  
+  .buttonBacklog:hover {
+    cursor: pointer;
+  }
+  
+  .containerAside {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #4a90e2;
+    height: 81vh;
+    padding: 0.4rem;
+    border-radius:0.5rem;
+    width: 95%;
+    border-color: aqua;
+  }
+  
+  div::-webkit-scrollbar {
+    display: none;
+  }
+    
+  .containerTitleButton {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 0.8rem;
+  }
+    
+  .title {
+    color: white; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+    display: flex;  
+    align-items: center; 
+    gap: 0.5rem; 
+  }
+  
+  
+  .buttonAddSprint {
+    all: unset;
+    position: absolute;
+  }
+  
+  .buttonAddSprint:hover {
+    cursor: pointer;
+  }
+  
+  .addButton {
+    margin-left: 10px;
+    padding: 2px 8px;
+    font-size: 1.2rem;
+    background-color: transparent;
+    border: 2px solid #0e7500;
+    color: #023b14;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .addButton:hover {
+    background-color: #033a08;
+    color: rgb(0, 238, 52);
+  }
+  
+  

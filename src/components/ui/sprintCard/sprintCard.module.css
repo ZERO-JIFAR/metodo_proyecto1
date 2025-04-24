@@ -1,0 +1,45 @@
+.sprintCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+  background-color: #CFD8DD;
+  justify-content: space-around;
+  border-radius: 0.4rem ;
+  padding: 3px;
+  border: 1px solid #cfcfcf;
+}
+
+.sprintCard:hover{
+ border: 1px solid #0D7DD8;
+}
+
+.sprintCardHeader {
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  font-size: larger;
+  cursor: pointer;
+}
+
+.sprintCardInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: center;  
+  font-size: small;
+  font-weight: bold;
+}
+
+.sprintCardButtons {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+.sprintCardButtons button {
+  cursor: pointer;
+  border: none;
+  background-color: #CFD8DD;
+}

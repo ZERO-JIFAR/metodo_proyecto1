@@ -1,0 +1,79 @@
+.tareas-screen-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  padding: 1rem;
+  background-color: #e6f7ff; /* celeste claro */
+}
+
+.content-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-grow: 1;
+}
+
+.backlog-container {
+  flex-grow: 3; 
+  background-color: #4a90e2; 
+  padding: 1rem;
+  border-radius: 0.5rem;
+  min-width: 120%; 
+}
+
+.headerBacklog {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.buttonTask {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonTask:hover {
+  background-color: #0056b3;
+}
+
+.containerTareas {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Nuevo botón con ícono + */
+.iconButton {
+  background-color: #28a745;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  padding: 0.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.iconButton:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
