@@ -57,7 +57,7 @@ const SprintModal = ({
 
     try {
       if (editMode) {
-        await updateSprintController(nuevoSprint.id, nuevoSprint);
+        await updateSprintController(nuevoSprint);
         Swal.fire("Sprint actualizado", "El sprint fue editado correctamente", "success");
       } else {
         await createSprintController(nuevoSprint);

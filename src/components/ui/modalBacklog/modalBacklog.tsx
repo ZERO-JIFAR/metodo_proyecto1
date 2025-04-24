@@ -8,6 +8,7 @@ import {
 import styles from "./modalBacklog.module.css";
 import Swal from "sweetalert2";
 import { createTareaSprint } from "../../../data/controllers/sprintController";
+import {tareaYup} from "../../../validation/yup"
 
 type TareaModalProps = {
   closeModal: () => void;
@@ -33,6 +34,7 @@ const TareaModal = ({
     descripcion: "",
     fechas: "",
   });
+
 
   useEffect(() => {
     if (tarea) {
