@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { ISprint } from "../../../types/ISprint";
 import styles from "./sprint.module.css";
-import { updateSprintController, deleteSprintController } from "../../../data/controllers/sprintController";
+import { updateSprintController, deleteSprintController, getSprintsController } from "../../../data/controllers/sprintController";
 import SprintModal from "../../ui/modalSprint/modalSprint";
 import TareaModal from "../../ui/modalBacklog/modalBacklog";
 import { ITareaSprint } from "../../../types/ITareaSprint";
@@ -12,16 +11,27 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 const SprintScreen = () => {
   const { id } = useParams<{ id: string }>();
   const [sprintData, setSprintData] = useState<ISprint | null>(null);
-
   const [modalSprintVisible, setModalSprintVisible] = useState(false);
   const [modalTareaVisible, setModalTareaVisible] = useState(false);
   const [tareaSeleccionada, setTareaSeleccionada] = useState<ITareaSprint | null>(null);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
-
   useEffect(() => {
-    loadSprintData();
+    if (id) {
+      loadSprintData();
+    }
   }, [id]);
+
+  const loadSprintData = async () => {
+    try {
+      const sprints = await getSprintsController();
+      if (!sprints) throw new Error("No se pudieron obtener los sprints");
+      const sprint = sprints.find((s) => s.id === id);
+      if (!sprint) throw new Error("Sprint no encontrado");
+      setSprintData(sprint);
+    } catch (error) {
+      console.error("❌ Error al cargar el sprint:", error);
+    }
+  };
 
   const handleEditarSprint = async (sprintActualizado: ISprint) => {
     try {
@@ -33,18 +43,8 @@ const SprintScreen = () => {
     }
   };
 
-  const loadSprintData = async () => {
-    try {
-      const response = await axios.get<ISprint>(`${API_BASE_URL}/Sprints/${id}`);
-      setSprintData(response.data);
-    } catch (error) {
-      console.error("❌ Error al cargar el sprint:", error);
-    }
-  };
-
   const handleDeleteTarea = async (tareaId: string) => {
     if (!sprintData) return;
-
     const nuevasTareas = sprintData.tareas.filter((t) => t.id !== tareaId);
     const sprintActualizado = { ...sprintData, tareas: nuevasTareas };
 
@@ -70,9 +70,7 @@ const SprintScreen = () => {
       <div key={tarea.id} className={styles.tareaCard}>
         <h4>{tarea.titulo}</h4>
         <p>{tarea.descripcion}</p>
-        <p>
-          <strong>Vence:</strong> {new Date(tarea.fechaLimite).toLocaleDateString()}
-        </p>
+        <p><strong>Vence:</strong> {new Date(tarea.fechaLimite).toLocaleDateString()}</p>
 
         <div className={styles.btnMover}>
           {estado !== "pendiente" && (
@@ -87,11 +85,7 @@ const SprintScreen = () => {
           )}
         </div>
 
-        {/* Botón para eliminar tarea */}
-        <button
-          className={styles.deleteButton}
-          onClick={() => handleDeleteTarea(tarea.id)}
-        >
+        <button className={styles.deleteButton} onClick={() => handleDeleteTarea(tarea.id)}>
           Eliminar
         </button>
       </div>
@@ -99,18 +93,26 @@ const SprintScreen = () => {
   };
 
   const moverTarea = async (tareaId: string, estadoActual: string, direccion: number) => {
+    if (!sprintData) return;
+
     const estados = ["pendiente", "en proceso", "finalizada"];
     const idx = estados.indexOf(estadoActual);
     const nuevoEstado = estados[idx + direccion];
-    if (!nuevoEstado || !sprintData) return;
+
+    if (!nuevoEstado) return;
 
     const nuevasTareas = sprintData.tareas.map((t) =>
       t.id === tareaId ? { ...t, estado: nuevoEstado } : t
     );
 
     const actualizado = { ...sprintData, tareas: nuevasTareas };
-    await updateSprintController(actualizado);
-    setSprintData(actualizado);
+
+    try {
+      await updateSprintController(actualizado);
+      setSprintData(actualizado);
+    } catch (error) {
+      console.error("❌ Error al mover la tarea:", error);
+    }
   };
 
   const handleGuardarTarea = async (tarea: ITareaSprint) => {
@@ -121,16 +123,21 @@ const SprintScreen = () => {
     );
 
     const sprintActualizado = { ...sprintData, tareas: tareasActualizadas };
-    await updateSprintController(sprintActualizado);
-    setSprintData(sprintActualizado);
-    setModalTareaVisible(false);
-    setTareaSeleccionada(null);
+
+    try {
+      await updateSprintController(sprintActualizado);
+      setSprintData(sprintActualizado);
+      setModalTareaVisible(false);
+      setTareaSeleccionada(null);
+    } catch (error) {
+      console.error("❌ Error al guardar la tarea:", error);
+    }
   };
 
   const handleCrearSprint = async (sprint: ISprint) => {
     try {
-      await axios.post(`${API_BASE_URL}/Sprints`, sprint);
-      loadSprintData(); // Recarga el sprint después de crear
+      await updateSprintController(sprint);
+      loadSprintData();
       setModalSprintVisible(false);
     } catch (error) {
       console.error("❌ Error al crear el sprint:", error);
@@ -145,10 +152,13 @@ const SprintScreen = () => {
         <h2 className={styles.sprintName}>Sprint: {sprintData.nombre}</h2>
 
         <div className={styles.buttonRow}>
-          <button className={styles.createButton} onClick={() => {
-            setTareaSeleccionada(null);
-            setModalTareaVisible(true);
-          }}>
+          <button
+            className={styles.createButton}
+            onClick={() => {
+              setTareaSeleccionada(null);
+              setModalTareaVisible(true);
+            }}
+          >
             + Crear nueva tarea
           </button>
         </div>

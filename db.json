@@ -1,78 +1,24 @@
 {
-  "Backlog": [
-    {
-      "id": "1745500971391",
-      "nombre": "poner los",
-      "descripcion": "poner los vasos de vidrio",
-      "fechaInicio": "2025-04-03",
-      "fechaFin": "2025-04-26"
-    },
-    {
-      "id": "1745501017115",
-      "nombre": "Poner los cubiertos",
-      "descripcion": "asdasd",
-      "fechaInicio": "2025-04-12",
-      "fechaFin": "2025-04-30"
-    },
-    {
-      "id": "1745515386702",
-      "nombre": "poner los vasos",
-      "descripcion": "asdads",
-      "fechaInicio": "5454-05-04",
-      "fechaFin": "5445-05-04"
-    },
-    {
-      "id": "1745516421658",
-      "nombre": "asads",
-      "descripcion": "asd",
-      "fechaInicio": "3000-02-10",
-      "fechaFin": "8000-12-12"
-    }
-  ],
-  "Sprints": [
-    {
-      "id": "1745491725448",
-      "nombre": "Poner la mesa.",
-      "inicio": "2008-05-03",
-      "fin": "2011-06-05",
-      "tareas": [
-        {
-          "id": "1745500905687",
-          "titulo": "asd",
-          "descripcion": "ads",
-          "estado": "en proceso",
-          "fechaLimite": "2025-04-25"
-        }
-      ]
-    },
-    {
-      "id": "1745499593315",
-      "nombre": "ASAS",
-      "inicio": "0001-01-11",
-      "fin": "0002-02-22",
-      "tareas": []
-    },
-    {
-      "id": "1745499603577",
-      "nombre": "ASAWSA",
-      "inicio": "0001-01-01",
-      "fin": "0002-02-02",
-      "tareas": [
-        {
-          "id": "1745504304593",
-          "titulo": "tarea1",
-          "descripcion": "tarea2",
-          "estado": "en proceso",
-          "fechaLimite": "1010-01-01"
-        }
-      ]
-    },
-    {
-      "id": "1745516854284",
-      "nombre": "456456456",
-      "inicio": "2025-04-02",
-      "fin": "2025-04-26",
-      "tareas": []
-    }
-  ]
+  "backlog": {
+    "tareas": [
+      {
+        "id": "1745718528653",
+        "nombre": "Prueba nuevo db.json",
+        "descripcion": "PRueba",
+        "fechaInicio": "2025-04-01",
+        "fechaFin": "2025-04-30"
+      }
+    ]
+  },
+  "sprintList": {
+    "sprints": [
+      {
+        "id": "1745718381248",
+        "nombre": "Prueba nuevo db.json",
+        "inicio": "2025-04-01",
+        "fin": "2025-05-30",
+        "tareas": []
+      }
+    ]
+  }
 }
