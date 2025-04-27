@@ -6,71 +6,91 @@ import { ITareaSprint } from "../../types/ITareaSprint";
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 // 🔹 Obtener todos los sprints
-// Obtener todos los sprints
 export const getSprintsController = async (): Promise<ISprint[] | undefined> => {
   try {
-    const response = await axios.get<ISprint[]>(`${API_BASE_URL}/Sprints`);
-    return response.data;
+    const response = await axios.get<{ sprints: ISprint[] }>(`${API_BASE_URL}/sprintList`);
+    return response.data.sprints;
   } catch (error) {
     console.error("❌ Error en getSprintsController:", error);
   }
 };
 
-// 🔹 Crear un nuevo sprint (agrega a Sprints)
-// Crear un nuevo sprint
+// 🔹 Crear un nuevo sprint
 export const createSprintController = async (sprint: ISprint): Promise<ISprint | undefined> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/Sprints`, sprint);
-    return response.data;
+    const response = await axios.get<{ sprints: ISprint[] }>(`${API_BASE_URL}/sprintList`);
+    const sprintsActuales = response.data.sprints;
+
+    const nuevosSprints = [...sprintsActuales, sprint];
+    await axios.put(`${API_BASE_URL}/sprintList`, { sprints: nuevosSprints });
+
+    return sprint;
   } catch (error) {
     console.error("❌ Error en createSprintController:", error);
   }
 };
 
+// 🔹 Eliminar un sprint
 export const deleteSprintController = async (id: string) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/Sprints/${id}`);
-    return response.data;
+    const response = await axios.get<{ sprints: ISprint[] }>(`${API_BASE_URL}/sprintList`);
+    const sprintsActuales = response.data.sprints;
+
+    const sprintsFiltrados = sprintsActuales.filter(sprint => sprint.id !== id);
+    await axios.put(`${API_BASE_URL}/sprintList`, { sprints: sprintsFiltrados });
+
   } catch (error) {
-    console.error("Error eliminando sprint:", error);
+    console.error("❌ Error eliminando sprint:", error);
     throw error;
   }
 };
+
+// 🔹 Actualizar un sprint
 export const updateSprintController = async (sprint: ISprint) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/Sprints/${sprint.id}`, sprint); // Usamos sprint.id directamente
-    return response.data;
+    const response = await axios.get<{ sprints: ISprint[] }>(`${API_BASE_URL}/sprintList`);
+    const sprintsActuales = response.data.sprints;
+
+    const sprintsActualizados = sprintsActuales.map(s =>
+      s.id === sprint.id ? sprint : s
+    );
+
+    await axios.put(`${API_BASE_URL}/sprintList`, { sprints: sprintsActualizados });
+
+    return sprint;
   } catch (error) {
-    console.error("Error actualizando sprint:", error);
+    console.error("❌ Error actualizando sprint:", error);
     throw error;
   }
 };
 
-
+// 🔹 Agregar tarea a un sprint
 export const addTareaToSprintController = async (
   idSprint: string,
   nuevaTarea: ITareaSprint
 ): Promise<void> => {
   try {
-    const response = await axios.get<ISprint[]>(`${API_BASE_URL}/Sprints`);
-    const sprints = response.data;
+    const response = await axios.get<{ sprints: ISprint[] }>(`${API_BASE_URL}/sprintList`);
+    const sprints = response.data.sprints;
 
-    const sprint = sprints.find((s) => s.id === idSprint);
+    const sprint = sprints.find(s => s.id === idSprint);
     if (!sprint) throw new Error("Sprint no encontrado");
 
-    const sprintActualizado = {
+    const sprintActualizado: ISprint = {
       ...sprint,
-      tareas: [...sprint.tareas, nuevaTarea],
+      tareas: [...sprint.tareas, nuevaTarea]
     };
 
-    await axios.put(`${API_BASE_URL}/Sprints/${idSprint}`, sprintActualizado);
+    const nuevosSprints = sprints.map(s => s.id === idSprint ? sprintActualizado : s);
+    await axios.put(`${API_BASE_URL}/sprintList`, { sprints: nuevosSprints });
+
   } catch (error) {
     console.error("❌ Error en addTareaToSprintController:", error);
     throw error;
   }
 };
 
-// 🔹 Mover una tarea de un sprint al backlog
+// 🔹 Mover una tarea de sprint al backlog
 export const moverTareaABacklogController = async (
   idSprint: string,
   tareaId: string
@@ -85,11 +105,11 @@ export const moverTareaABacklogController = async (
     const tarea = sprint.tareas.find(t => t.id === tareaId);
     if (!tarea) throw new Error("Tarea no encontrada");
 
-    // Obtener tareas actuales del backlog
-    const responseBacklog = await axios.get(`${API_BASE_URL}/Backlog`);
-    const tareasBacklog = responseBacklog.data.Backlog || [];
+    // Obtener backlog actual
+    const responseBacklog = await axios.get<{ tareas: any[] }>(`${API_BASE_URL}/backlog`);
+    const tareasBacklog = responseBacklog.data.tareas;
 
-    // Crear la nueva tarea para el backlog
+    // Nueva tarea para backlog
     const nuevaTareaBacklog = {
       id: tarea.id,
       nombre: tarea.titulo,
@@ -99,8 +119,8 @@ export const moverTareaABacklogController = async (
     };
 
     // Agregar la tarea al backlog
-    await axios.put(`${API_BASE_URL}/Backlog`, {
-      Backlog: [...tareasBacklog, nuevaTareaBacklog]
+    await axios.put(`${API_BASE_URL}/backlog`, {
+      tareas: [...tareasBacklog, nuevaTareaBacklog]
     });
 
     // Eliminar la tarea del sprint
@@ -109,11 +129,11 @@ export const moverTareaABacklogController = async (
       tareas: sprint.tareas.filter(t => t.id !== tareaId)
     };
 
-    const nuevaListaSprints = sprints.map(s =>
+    const nuevosSprints = sprints.map(s =>
       s.id === idSprint ? sprintActualizado : s
     );
 
-    await axios.put(`${API_BASE_URL}/Sprints`, nuevaListaSprints);
+    await axios.put(`${API_BASE_URL}/sprintList`, { sprints: nuevosSprints });
 
   } catch (error) {
     console.error("❌ Error en moverTareaABacklogController:", error);
@@ -126,13 +146,13 @@ export const createTareaSprint = async (
   tareaNueva: { titulo: string; descripcion: string; fechaLimite?: string }
 ) => {
   try {
-    const response = await axios.get<{ Sprints: ISprint[] }>(`${API_BASE_URL}/Sprints`);
-    const sprints = response.data.Sprints;
+    const response = await axios.get<{ sprints: ISprint[] }>(`${API_BASE_URL}/sprintList`);
+    const sprints = response.data.sprints;
 
     const sprint = sprints.find(s => s.id === idSprint);
     if (!sprint) throw new Error("Sprint no encontrado");
 
-    const nuevaTarea = {
+    const nuevaTarea: ITareaSprint = {
       id: (sprint.tareas.length + 1).toString(),
       titulo: tareaNueva.titulo,
       descripcion: tareaNueva.descripcion,
@@ -146,7 +166,7 @@ export const createTareaSprint = async (
     };
 
     const nuevosSprints = sprints.map(s => s.id === idSprint ? sprintActualizado : s);
-    await axios.put(`${API_BASE_URL}/Sprints`, nuevosSprints);
+    await axios.put(`${API_BASE_URL}/sprintList`, { sprints: nuevosSprints });
 
     return nuevaTarea;
   } catch (error) {
